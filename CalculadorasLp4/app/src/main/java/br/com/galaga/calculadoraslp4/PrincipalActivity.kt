@@ -34,4 +34,9 @@ class PrincipalActivity : AppCompatActivity() {
         val intent = Intent(baseContext, PlayersActivity::class.java)
         startActivity(intent)
     }
+
+    fun animation (view: View){
+        val intent = Intent(baseContext, AnimationActivity::class.java)
+        startActivity(intent)
+    }
 }

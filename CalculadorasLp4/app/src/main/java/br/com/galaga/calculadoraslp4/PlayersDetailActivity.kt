@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 
 import kotlinx.android.synthetic.main.activity_players_detail.*
 import kotlinx.android.synthetic.main.content_players_detail.*
@@ -27,6 +30,16 @@ class PlayersDetailActivity : AppCompatActivity() {
         edtNome.setText(intent.getStringExtra("nome"))
         edtQuedas.setText(intent.getStringExtra("quedas"))
         edtGols.setText(intent.getStringExtra("gols"))
+    }
+
+    fun apagar(view: View){
+        val intentResult = Intent()
+        intentResult.putExtra("nome", edtNome.text.toString())
+        intentResult.putExtra("quedas", edtQuedas.text.toString())
+        intentResult.putExtra("gols", edtGols.text.toString())
+        intentResult.putExtra("position", intent.getIntExtra("position", 0))
+        setResult(PlayersActivity.DELETEJOGADOR, intentResult)
+        finish()
     }
 
 }

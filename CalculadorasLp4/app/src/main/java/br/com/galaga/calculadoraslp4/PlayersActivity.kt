@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_players.*
 import kotlinx.android.synthetic.main.content_players.*
@@ -18,6 +19,7 @@ class PlayersActivity : AppCompatActivity() {
     companion object {
         val NEWJOGADOR = 1
         val EDITJOGADOR = 2
+        val DELETEJOGADOR = 4545
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,15 +74,26 @@ class PlayersActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null){
-            if (requestCode == NEWJOGADOR){
+            if (resultCode == NEWJOGADOR){
                 addNewJogador(data)
-            } else if (requestCode == EDITJOGADOR){
-                aditJogador(data)
+            } else if (resultCode == EDITJOGADOR) {
+                editJogador(data)
+            } else if (requestCode == NEWJOGADOR && resultCode == DELETEJOGADOR){
+                Toast.makeText(baseContext, "Acho que ta faltando um botão de voltar..", Toast.LENGTH_LONG).show()
+            } else if (resultCode == DELETEJOGADOR){
+                deletJogador(data)
             }
         }
     }
 
-    private fun aditJogador(data: Intent) {
+    private fun deletJogador(data: Intent) {
+        val position = data.getIntExtra("position", 0)
+        jogadores.removeAt(position)
+        val adapter = ArrayAdapter<Jogador>(baseContext, android.R.layout.simple_list_item_1, jogadores)
+        listView.adapter = adapter
+    }
+
+    private fun editJogador(data: Intent) {
         val nome = data.getStringExtra("nome")
         val gols = data.getStringExtra("gols")
         val quedas = data.getStringExtra("quedas")
